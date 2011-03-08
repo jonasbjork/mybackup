@@ -1,0 +1,45 @@
+
+Authori : Jonas Bjork <jonas@jonasbjork.net>
+License : GNU General Public License, GPLv3
+Version : 0.2
+Date    : 2011-03-08
+
+MyBackup is a PHP class for backing up MySQL databases
+and tables. Like the CLI-command "mysqladmin". Format of
+backup is fully compatible with CLI-command "mysql" and
+you could use MyBackup for your MySQL-backups if you
+don't want to depend on PHP-function system() to use 
+"mysqladmin"
+
+!!PLEASE NOTE!! This class is in an early beta and should
+probably be tested in development environment first.
+
+Example of usage:
+
+= Connecting to your database server
+$mb = new MyBackup('DB_HOST', 'DB_USER', 'DB_PASS', 'DB_DATABASE');
+$mb->database_connect();
+
+= Selecting tables to dump, of none we will dump all tables in
+= that database. You can select by comma seperate or using an array
+$mb->tables_prepare('wp_1_comments,wp_2_comments,wp_3_comments');
+
+= or..
+$mb->tables_prepare( array('wp_1_comments', 'wp_2_comments', 'wp_3_comments') );
+
+= If you want to see what tables we have selected, just:
+$mb->tables_print();
+
+= Perform the actual database dump
+$data = $mb->database_backup();
+
+= (Working on writing dump to file at the moment. Soon!)
+
+= Print what we've dumped
+print $data;
+
+
+Release early, release often!
+http://en.wikipedia.org/wiki/Release_early,_release_often
+
+
