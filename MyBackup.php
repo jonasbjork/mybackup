@@ -56,9 +56,9 @@ class MyBackup {
 	* to file, else send it to standard output
 	*/
 	public function database_backup($filename = NULL) {
-
+		$fh = NULL;
 		if ($filename != NULL) {
-			if (!$fh = fopen($filename, 'w+')) {
+			if (!$fh = @fopen($filename, 'w+')) {
 				printf("Could not open %s for writing.\n", $filename);
 				exit();
 			}
@@ -91,7 +91,13 @@ class MyBackup {
 			}
 			$data .= "UNLOCK TABLES;".PHP_EOL;
 		}
-		return $data;
+		if($fh) {
+			fwrite($fh, $data);
+			fclose($fh);
+			return "Wrote dump to file: $filename\n";
+		} else {
+			return $data;
+		}
 	}
 	
 
